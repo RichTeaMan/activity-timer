@@ -1,0 +1,19 @@
+{
+    "name": "activity-timer-backend",
+    "description": "",
+    "version": "0.0.1",
+    "private": true,
+    "devDependencies": {
+        "@types/aws-lambda": "^8.10.130",
+        "@types/node": "^20.10.6",
+        "aws-sdk-client-mock": "^2.0.0",
+        "esbuild": "^0.19.11",
+        "typescript": "^5.3.3"
+    },
+    "scripts": {
+        "start": "sam local start-api",
+        "compile": "tsc",
+        "build": "sam build",
+        "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js"
+    }
+}
