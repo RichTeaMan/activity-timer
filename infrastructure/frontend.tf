@@ -1,10 +1,10 @@
 resource "aws_s3_bucket" "frontend_bucket" {
-  bucket = "activity-timer-frontend"
+  bucket        = "activity-timer-frontend"
   force_destroy = true
 }
 
 resource "aws_s3_bucket_public_access_block" "frontend_bucket" {
-  bucket = aws_s3_bucket.frontend_bucket.id
+  bucket                  = aws_s3_bucket.frontend_bucket.id
   block_public_policy     = false
   block_public_acls       = false
   ignore_public_acls      = false
@@ -17,8 +17,8 @@ resource "aws_s3_bucket_policy" "frontend_bucket" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid = "PublicReadGetObject"
-        Effect = "Allow"
+        Sid       = "PublicReadGetObject"
+        Effect    = "Allow"
         Principal = "*"
         Action = [
           "s3:GetObject",
@@ -31,7 +31,7 @@ resource "aws_s3_bucket_policy" "frontend_bucket" {
       }
     ]
   })
-  depends_on = [ aws_s3_bucket_public_access_block.frontend_bucket ]
+  depends_on = [aws_s3_bucket_public_access_block.frontend_bucket]
 }
 
 resource "aws_s3_bucket_website_configuration" "frontend_website_configuration" {
@@ -55,13 +55,13 @@ locals {
 #}
 
 resource "aws_cloudfront_distribution" "frontend_distribution" {
-  depends_on = [ aws_s3_bucket_website_configuration.frontend_website_configuration ]
+  depends_on = [aws_s3_bucket_website_configuration.frontend_website_configuration]
   origin {
     domain_name = aws_s3_bucket_website_configuration.frontend_website_configuration.website_endpoint
     #origin_access_control_id = aws_cloudfront_origin_access_control.default.id
     origin_id = local.s3_origin_id
 
-     custom_origin_config {
+    custom_origin_config {
       http_port              = "80"
       https_port             = "443"
       origin_protocol_policy = "http-only"

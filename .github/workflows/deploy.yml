@@ -45,6 +45,13 @@ jobs:
         run: |
           cd backend
           ./install-sam.sh
+      - name: Build backend
+        run: |
+          cd backend
+          npm install
+          npm run build
+          ./build-zip.sh
+          cp build/activity-timer-lambda.zip ../infrastructure/.
       - name: Create infrastructure
         run: |
           cd infrastructure
@@ -67,8 +74,3 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: eu-west-2
-      - name: Build backend
-        run: |
-          cd backend
-          npm install
-          npm run build
